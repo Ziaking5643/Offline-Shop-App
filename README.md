@@ -1,47 +1,47 @@
-# 📦 Shop Management System - Offline Django App
+ Shop Management System - Offline Django App
 
 A complete offline-capable Django web application for managing inventory, customers, and orders for small businesses with no internet access.
 
-## ✨ Features
+##  Features
 
 ### Inventory Management
-- ✅ Product CRUD (Create, Read, Update, Delete)
-- ✅ SKU tracking and categorization
-- ✅ Stock level monitoring with reorder alerts
-- ✅ Profit margin calculations
-- ✅ Inventory activity logging
+-  Product CRUD (Create, Read, Update, Delete)
+-  SKU tracking and categorization
+-  Stock level monitoring with reorder alerts
+-  Profit margin calculations
+-  Inventory activity logging
 
 ### Customer Management
-- ✅ Customer database with contact details
-- ✅ Customer order history
-- ✅ Purchase statistics
-- ✅ City/Location tracking
+-  Customer database with contact details
+-  Customer order history
+-  Purchase statistics
+-  City/Location tracking
 
 ### Order Management
-- ✅ Create and manage customer orders
-- ✅ Add/remove multiple items per order
-- ✅ Automatic order numbering
-- ✅ Order status tracking (Pending, Confirmed, Completed, Cancelled)
-- ✅ Discount and tax calculations
-- ✅ Order editing and deletion
+-  Create and manage customer orders
+-  Add/remove multiple items per order
+-  Automatic order numbering
+-  Order status tracking (Pending, Confirmed, Completed, Cancelled)
+-  Discount and tax calculations
+-  Order editing and deletion
 
 ### Payment & Receipts
-- ✅ Payment recording (Cash, Check, Bank Transfer, Credit)
-- ✅ Professional receipt generation
-- ✅ Print-friendly receipts
-- ✅ Payment method tracking
+-  Payment recording (Cash, Check, Bank Transfer, Credit)
+-  Professional receipt generation
+-  Print-friendly receipts
+-  Payment method tracking
 
 ### Reporting
-- ✅ Dashboard with key metrics
-- ✅ Low stock alerts and reports
-- ✅ Inventory activity logs
-- ✅ Revenue tracking
-- ✅ Order status reports
+-  Dashboard with key metrics
+-  Low stock alerts and reports
+-  Inventory activity logs
+-  Revenue tracking
+-  Order status reports
 
 ### Admin Panel
-- ✅ Django admin interface for advanced management
-- ✅ Bulk operations support
-- ✅ Database management tools
+-  Django admin interface for advanced management
+-  Bulk operations support
+-  Database management tools
 
 ## 🚀 Quick Start
 
@@ -75,7 +75,7 @@ A complete offline-capable Django web application for managing inventory, custom
    - Password: `admin123`
    - ⚠️ **IMPORTANT**: Change this password immediately after first login!
 
-## 📱 Using the Application
+## Using the Application
 
 ### Dashboard
 - View total products, customers, orders
@@ -135,7 +135,7 @@ A complete offline-capable Django web application for managing inventory, custom
 3. Review the receipt in the new window
 4. Click the Print button or use Ctrl+P to print
 
-## 🔧 Maintenance
+##  Maintenance
 
 ### Backup Your Data
 The database is stored in `db.sqlite3` file. Back this up regularly:
@@ -156,14 +156,14 @@ If something goes wrong, you can reset:
 3. Click "Change password"
 4. Enter new password and confirm
 
-## 🛑 Stopping the Server
+##  Stopping the Server
 
 1. Click on the command window with the server
 2. Press **Ctrl+C**
 3. Type **Y** and press Enter to confirm
 4. The window will close
 
-## 📊 Data Structure
+## Data Structure
 
 ### Products
 - Name, SKU, Category
@@ -193,15 +193,8 @@ If something goes wrong, you can reset:
 - Transaction ID
 - Payment Date
 
-## ⚠️ Important Notes
 
-1. **Data Backup**: Regularly backup `db.sqlite3` to prevent data loss
-2. **Admin Password**: Change the default admin password immediately
-3. **Network**: This works completely offline - no internet required
-4. **Single User**: For best results with 1-2 users on same computer
-5. **Performance**: Works best with fewer than 50,000 records
-
-## 🆘 Troubleshooting
+## Troubleshooting
 
 ### Problem: "Python not found"
 - **Solution**: Install Python from https://www.python.org/
@@ -270,7 +263,7 @@ shop_app/
         └── ...
 ```
 
-## 🔒 Security Notes
+ Security Notes
 
 - This application is designed for **offline use in a secure environment**
 - Do NOT expose this on the internet without proper security setup
@@ -278,11 +271,11 @@ shop_app/
 - Keep database backups in a safe location
 - Do not share `db.sqlite3` file without encryption
 
-## 📄 License
+ 📄 License
 
 This application is provided as-is for offline shop management.
 
-## 🎉 Enjoy Your Shop Management System!
+ Enjoy Your Shop Management System!
 
 Thank you for using Shop Manager. For best results:
 - Regular data backups
@@ -297,5 +290,6 @@ Thank you for using Shop Manager. For best results:
 **Python**: 3.8+  
 **Django**: 5.2.4  
 **Database**: SQLite3
-#   O f f l i n e - S h o p - A p p  
+#   O f f l i n e - S h o p - A p p 
+ 
  
