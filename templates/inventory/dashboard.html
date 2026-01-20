@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Shop Manager{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-3 col-sm-6">
+        <div class="stat-card primary">
+            <h5>Total Products</h5>
+            <h3>{{ total_products }}</h3>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="stat-card success">
+            <h5>Total Customers</h5>
+            <h3>{{ total_customers }}</h3>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="stat-card info">
+            <h5>Total Orders</h5>
+            <h3>{{ total_orders }}</h3>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="stat-card warning">
+            <h5>Total Revenue</h5>
+            <h3>Rs. {{ revenue|floatformat:0 }}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">📉 Low Stock Products</h5>
+            </div>
+            <div class="card-body">
+                {% if low_stock %}
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Stock</th>
+                                    <th>Reorder Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in low_stock %}
+                                <tr>
+                                    <td>{{ product.name }}</td>
+                                    <td><strong>{{ product.quantity_in_stock }}</strong></td>
+                                    <td>{{ product.reorder_level }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="{% url 'low-stock' %}" class="btn btn-sm btn-primary">View All</a>
+                {% else %}
+                    <p class="text-muted">All products are well-stocked.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">📋 Recent Orders</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_orders %}
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Order #</th>
+                                    <th>Customer</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in recent_orders %}
+                                <tr>
+                                    <td><a href="{% url 'order-detail' order.pk %}">{{ order.order_number }}</a></td>
+                                    <td>{{ order.customer.name }}</td>
+                                    <td>
+                                        {% if order.status == 'completed' %}
+                                            <span class="badge bg-success">Completed</span>
+                                        {% elif order.status == 'confirmed' %}
+                                            <span class="badge bg-info">Confirmed</span>
+                                        {% elif order.status == 'pending' %}
+                                            <span class="badge bg-warning">Pending</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">{{ order.get_status_display }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>Rs. {{ order.net_amount|floatformat:2 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="{% url 'order-list' %}" class="btn btn-sm btn-primary">View All Orders</a>
+                {% else %}
+                    <p class="text-muted">No orders yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">🎯 Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'product-create' %}" class="btn btn-primary">➕ Add Product</a>
+                <a href="{% url 'customer-create' %}" class="btn btn-success">➕ Add Customer</a>
+                <a href="{% url 'order-create' %}" class="btn btn-info">➕ Create Order</a>
+                <a href="{% url 'inventory-logs' %}" class="btn btn-warning">📊 View Activity</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

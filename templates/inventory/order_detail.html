@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ order.order_number }} - Shop Manager{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>📋 {{ order.order_number }}</h2>
+    </div>
+    <div class="col-md-4">
+        {% if order.status != 'completed' %}
+            <a href="{% url 'order-edit' order.pk %}" class="btn btn-warning float-end me-2">✏️ Edit</a>
+        {% endif %}
+        <a href="{% url 'order-list' %}" class="btn btn-secondary float-end me-2">Back</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Order Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Order Number:</strong> {{ order.order_number }}</p>
+                <p><strong>Customer:</strong> {{ order.customer.name }}</p>
+                <p><strong>Status:</strong> 
+                    {% if order.status == 'completed' %}
+                        <span class="badge bg-success">Completed</span>
+                    {% elif order.status == 'confirmed' %}
+                        <span class="badge bg-info">Confirmed</span>
+                    {% elif order.status == 'pending' %}
+                        <span class="badge bg-warning">Pending</span>
+                    {% else %}
+                        <span class="badge bg-danger">{{ order.get_status_display }}</span>
+                    {% endif %}
+                </p>
+                <p><strong>Created:</strong> {{ order.created_at|date:"M d, Y H:i" }}</p>
+                <p><strong>Notes:</strong> {{ order.notes|default:"N/A" }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Order Summary</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Subtotal:</strong> Rs. {{ order.total_amount|floatformat:2 }}</p>
+                <p><strong>Discount:</strong> -Rs. {{ order.discount|floatformat:2 }}</p>
+                <p><strong>Tax:</strong> +Rs. {{ order.tax|floatformat:2 }}</p>
+                <hr>
+                <p style="font-size: 1.2rem;"><strong>Net Amount:</strong> Rs. {{ order.net_amount|floatformat:2 }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">📦 Order Items</h5>
+            </div>
+            {% if items %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td><strong>{{ item.product.name }}</strong></td>
+                            <td>{{ item.quantity }}</td>
+                            <td>Rs. {{ item.unit_price|floatformat:2 }}</td>
+                            <td>Rs. {{ item.total|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="card-body">
+                <p class="text-muted">No items added to this order yet.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">💳 Payment Information</h5>
+            </div>
+            {% if order.payment %}
+            <div class="card-body">
+                <p><strong>Amount Paid:</strong> Rs. {{ order.payment.amount|floatformat:2 }}</p>
+                <p><strong>Payment Method:</strong> {{ order.payment.get_payment_method_display }}</p>
+                <p><strong>Transaction ID:</strong> {{ order.payment.transaction_id|default:"N/A" }}</p>
+                <p><strong>Payment Date:</strong> {{ order.payment.payment_date|date:"M d, Y H:i" }}</p>
+                <p><strong>Notes:</strong> {{ order.payment.notes|default:"N/A" }}</p>
+                <a href="{% url 'receipt' order.pk %}" class="btn btn-info">🖨️ Print Receipt</a>
+            </div>
+            {% else %}
+            <div class="card-body">
+                {% if order.status != 'cancelled' %}
+                    <p class="text-muted mb-3">No payment recorded for this order yet.</p>
+                    <a href="{% url 'add-payment' order.pk %}" class="btn btn-success">➕ Add Payment</a>
+                {% else %}
+                    <p class="text-muted">This order has been cancelled.</p>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

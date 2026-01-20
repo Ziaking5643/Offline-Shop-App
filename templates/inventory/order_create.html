@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Order - Shop Manager{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>➕ Create New Order</h2>
+    </div>
+    <div class="col-md-4">
+        <a href="{% url 'order-list' %}" class="btn btn-secondary float-end">← Back</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="customerSelect" class="form-label">Select Customer</label>
+                <select name="customer" id="customerSelect" class="form-control" required>
+                    <option value="">-- Choose a customer --</option>
+                    {% for customer in customers %}
+                    <option value="{{ customer.pk }}">{{ customer.name }} ({{ customer.phone }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">✔️ Create Order</button>
+                <a href="{% url 'order-list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">📌 Quick Actions</h5>
+    </div>
+    <div class="card-body">
+        <p class="text-muted mb-3">Don't see the customer you want? Create a new one first.</p>
+        <a href="{% url 'customer-create' %}" class="btn btn-success">➕ Add New Customer</a>
+    </div>
+</div>
+{% endblock %}

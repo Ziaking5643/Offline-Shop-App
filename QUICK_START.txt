@@ -1,0 +1,160 @@
+SHOP MANAGEMENT SYSTEM - QUICK REFERENCE GUIDE
+==============================================
+
+📌 FIRST TIME SETUP
+-------------------
+1. Extract the folder to your computer
+2. Double-click: setup.bat (creates environment)
+3. Double-click: run.bat (starts the server)
+4. Open browser: http://127.0.0.1:8000/
+
+🔑 DEFAULT CREDENTIALS
+----------------------
+Username: admin
+Password: admin123
+
+⚠️ CHANGE THIS IMMEDIATELY AFTER LOGIN!
+
+🌐 IMPORTANT URLS
+-----------------
+Main App:         http://127.0.0.1:8000/
+Admin Panel:      http://127.0.0.1:8000/admin/
+Products:         http://127.0.0.1:8000/products/
+Orders:           http://127.0.0.1:8000/orders/
+Customers:        http://127.0.0.1:8000/customers/
+Dashboard:        http://127.0.0.1:8000/
+
+🎯 DAILY WORKFLOW
+------------------
+
+MORNING CHECKLIST:
+□ Check Dashboard for low stock items
+□ Review pending orders
+□ Check inventory activity log
+
+CREATING AN ORDER:
+□ Go to Orders → Create Order
+□ Select customer
+□ Add items to order
+□ Set discount/tax if applicable
+□ Save order
+□ Add payment when customer pays
+□ Print receipt
+
+MANAGING STOCK:
+□ Products → Add/Edit to manage inventory
+□ Check Dashboard → Low Stock Products
+□ View inventory logs for all transactions
+
+🔄 COMMON TASKS
+----------------
+
+ADD NEW PRODUCT:
+Inventory → Products → Add Product → Fill details → Save
+
+ADD NEW CUSTOMER:
+Customers → Add Customer → Fill details → Save
+
+CREATE ORDER:
+Orders → Create Order → Select customer → Add items → Save
+
+RECORD PAYMENT:
+Orders → [Select Order] → Add Payment → Enter details → Record
+
+PRINT RECEIPT:
+Orders → [Select Order] → Print Receipt → Print
+
+VIEW STATISTICS:
+Dashboard - Shows all key metrics at a glance
+
+🛠️ BATCH FILES
+---------------
+run.bat                 - Starts the application (use this!)
+setup.bat               - Initial setup (one time only)
+load_sample_data.bat    - Add test data for learning
+
+📂 IMPORTANT FILES
+------------------
+db.sqlite3             - Your DATABASE (backup this regularly!)
+README.md              - Full documentation
+This file              - Quick reference
+
+💾 BACKUP INSTRUCTIONS
+----------------------
+1. Locate db.sqlite3 file in the shop_app folder
+2. Right-click → Copy
+3. Right-click in another folder → Paste
+4. Rename to: db.sqlite3.backup
+5. Store in a safe location or USB drive
+
+🔐 RESTORE FROM BACKUP
+----------------------
+1. Stop the application (Ctrl+C)
+2. Replace db.sqlite3 with your backup file
+3. Run run.bat again
+
+❌ TROUBLESHOOTING
+------------------
+
+Problem: "Port 8000 is already in use"
+Solution: 
+  - Close any other instances of the app
+  - Wait 30 seconds and try again
+
+Problem: "Python not found" error
+Solution: Install Python from python.org
+  - Make sure to check "Add to PATH"
+
+Problem: "Database locked" error
+Solution:
+  - Close all browser tabs with the app
+  - Stop the server (Ctrl+C)
+  - Wait 30 seconds
+  - Run run.bat again
+
+Problem: Can't login with admin/admin123
+Solution:
+  - Stop server (Ctrl+C)
+  - Delete db.sqlite3
+  - Run run.bat (will create new database)
+  - Login with admin/admin123
+
+🚀 PERFORMANCE TIPS
+-------------------
+✓ Keep database backups
+✓ Delete very old completed orders periodically
+✓ Use keyboard shortcuts (Tab to navigate forms)
+✓ Run on a dedicated computer if possible
+✓ Keep at least 500MB free disk space
+
+📊 DATA LIMITS
+---------------
+Product Records:     No limit (tested to 100,000+)
+Customer Records:    No limit
+Order Records:       No limit
+Recommended:         Keep under 50,000 active records for best speed
+
+🔔 REGULAR MAINTENANCE
+-----------------------
+Weekly:
+□ Review low stock items
+□ Check order status
+□ Verify recent payments
+
+Monthly:
+□ Backup database
+□ Review sales reports
+□ Check customer payments
+
+📞 NEED HELP?
+--------------
+Check the README.md file for:
+✓ Full feature list
+✓ Detailed instructions
+✓ Troubleshooting guide
+✓ Security information
+
+---
+Version: 1.0
+Last Updated: 2024
+Developed for Offline Use

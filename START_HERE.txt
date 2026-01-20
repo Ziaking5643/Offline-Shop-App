@@ -1,0 +1,112 @@
+🎯 SHOP MANAGEMENT SYSTEM - STARTUP GUIDE
+
+═══════════════════════════════════════════════════════════════════
+
+STEP 1: INITIAL SETUP (First Time Only)
+───────────────────────────────────────
+
+1. Find the setup.bat file in the shop_app folder
+2. Double-click it
+3. Wait for the message "Setup complete!"
+4. A command window will close automatically
+
+
+STEP 2: START THE APPLICATION
+──────────────────────────────
+
+1. Find the run.bat file in the shop_app folder
+2. Double-click it
+3. A black command window will open
+4. Wait until you see: "Server is running at: http://127.0.0.1:8000/"
+5. Keep this window open while using the app
+
+
+STEP 3: OPEN IN BROWSER
+───────────────────────
+
+1. Open your web browser (Chrome, Firefox, Edge, Safari)
+2. In the address bar, type: http://127.0.0.1:8000/
+3. Press Enter
+4. The Shop Dashboard will load
+
+
+STEP 4: LOGIN TO ADMIN (Optional)
+──────────────────────────────────
+
+1. In browser, go to: http://127.0.0.1:8000/admin/
+2. Username: admin
+3. Password: admin123
+4. Click "Log in"
+
+⚠️ IMPORTANT: Change the password immediately after login!
+   - Click your username in top right
+   - Click "Change password"
+   - Enter new password
+
+
+STEP 5: START USING
+──────────────────
+
+Dashboard Tab:
+- View all important information
+- See low stock alerts
+- Check recent orders
+
+Inventory Menu:
+- Add/Edit/Delete products
+- View product details
+- Check inventory activity log
+
+Orders Menu:
+- Create new orders
+- View order details
+- Add payments
+- Print receipts
+
+Customers Menu:
+- Add/Edit/Delete customers
+- View customer history
+- Check total purchases
+
+
+═══════════════════════════════════════════════════════════════════
+
+❓ COMMON QUESTIONS
+
+Q: How do I stop the application?
+A: Click on the black command window and press Ctrl+C, then press Y
+
+Q: How do I restart?
+A: Simply run run.bat again
+
+Q: Where is my data stored?
+A: In db.sqlite3 file - backup this file regularly!
+
+Q: Can I use this on multiple computers?
+A: Copy the entire shop_app folder and run on another computer
+
+Q: What if I forgot the admin password?
+A: Delete db.sqlite3 and run run.bat again (this resets everything)
+
+Q: Can I add more users?
+A: Yes, through the Admin panel
+
+
+═══════════════════════════════════════════════════════════════════
+
+🔐 SECURITY REMINDERS
+
+✓ Change default admin password
+✓ Backup db.sqlite3 regularly  
+✓ Don't share the folder with passwords
+✓ Only run on secure computer networks
+✓ Keep Windows firewall enabled
+
+
+═══════════════════════════════════════════════════════════════════
+
+✨ You're all set! Start with run.bat and enjoy managing your shop!
+
+Need more help? Open README.md for complete documentation.
+
+═══════════════════════════════════════════════════════════════════

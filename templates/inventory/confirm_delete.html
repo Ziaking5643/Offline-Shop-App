@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Delete - Shop Manager{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>⚠️ Confirm Deletion</h2>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <p class="lead">Are you sure you want to delete the following item?</p>
+        
+        {% if product %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Product:</strong> {{ product.name }} ({{ product.sku }})
+            </div>
+        {% elif customer %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Customer:</strong> {{ customer.name }}
+            </div>
+        {% elif order %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Order:</strong> {{ order.order_number }}
+            </div>
+        {% endif %}
+
+        <p class="text-muted">This action cannot be undone.</p>
+
+        <form method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">🗑️ Yes, Delete</button>
+            <a href="javascript:history.back()" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

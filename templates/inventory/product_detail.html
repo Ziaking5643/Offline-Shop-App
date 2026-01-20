@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} - Shop Manager{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>{{ product.name }}</h2>
+    </div>
+    <div class="col-md-4">
+        <a href="{% url 'product-edit' product.pk %}" class="btn btn-warning float-end me-2">✏️ Edit</a>
+        <a href="{% url 'product-list' %}" class="btn btn-secondary float-end me-2">Back</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Product Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>SKU:</strong> {{ product.sku }}</p>
+                <p><strong>Category:</strong> {{ product.category.name|default:"N/A" }}</p>
+                <p><strong>Description:</strong> {{ product.description|default:"N/A" }}</p>
+                <p><strong>Purchase Price:</strong> Rs. {{ product.purchase_price|floatformat:2 }}</p>
+                <p><strong>Selling Price:</strong> Rs. {{ product.selling_price|floatformat:2 }}</p>
+                <p><strong>Profit per Unit:</strong> Rs. {{ product.profit_per_unit|floatformat:2 }}</p>
+                <p><strong>Stock Status:</strong> 
+                    {% if product.quantity_in_stock <= product.reorder_level %}
+                        <span class="badge bg-danger">Low Stock</span>
+                    {% else %}
+                        <span class="badge bg-success">In Stock</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Inventory Details</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Current Stock:</strong> <span class="badge bg-primary fs-6">{{ product.quantity_in_stock }}</span></p>
+                <p><strong>Reorder Level:</strong> {{ product.reorder_level }}</p>
+                <p><strong>Total Value:</strong> Rs. {{ product.total_value|floatformat:2 }}</p>
+                <p><strong>Status:</strong> 
+                    {% if product.is_active %}
+                        <span class="badge bg-success">Active</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inactive</span>
+                    {% endif %}
+                </p>
+                <p><strong>Created:</strong> {{ product.created_at|date:"M d, Y" }}</p>
+                <p><strong>Updated:</strong> {{ product.updated_at|date:"M d, Y" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">📋 Recent Activity</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm mb-0">
+                    <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th>Quantity</th>
+                            <th>Reason</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in logs %}
+                        <tr>
+                            <td><strong>{{ log.get_action_display }}</strong></td>
+                            <td>{{ log.quantity }}</td>
+                            <td>{{ log.reason|default:"N/A" }}</td>
+                            <td>{{ log.created_at|date:"M d, Y H:i" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-3">No activity logged</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

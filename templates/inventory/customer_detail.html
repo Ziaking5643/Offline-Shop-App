@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Customer Details - Shop Manager{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>👤 {{ customer.name }}</h2>
+    </div>
+    <div class="col-md-4">
+        <a href="{% url 'customer-edit' customer.pk %}" class="btn btn-warning float-end me-2">✏️ Edit</a>
+        <a href="{% url 'customer-list' %}" class="btn btn-secondary float-end me-2">Back</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Contact Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Name:</strong> {{ customer.name }}</p>
+                <p><strong>Phone:</strong> {{ customer.phone|default:"N/A" }}</p>
+                <p><strong>Email:</strong> {{ customer.email|default:"N/A" }}</p>
+                <p><strong>Address:</strong> {{ customer.address|default:"N/A" }}</p>
+                <p><strong>City:</strong> {{ customer.city|default:"N/A" }}</p>
+                <p><strong>Member Since:</strong> {{ customer.created_at|date:"M d, Y" }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">📊 Customer Statistics</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Total Orders:</strong> <span class="badge bg-primary fs-6">{{ orders|length }}</span></p>
+                <p><strong>Total Spent:</strong> Rs. {{ total_spent|floatformat:2 }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">📋 Order History</h5>
+            </div>
+            {% if orders %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td><strong>{{ order.order_number }}</strong></td>
+                            <td>
+                                {% if order.status == 'completed' %}
+                                    <span class="badge bg-success">Completed</span>
+                                {% elif order.status == 'confirmed' %}
+                                    <span class="badge bg-info">Confirmed</span>
+                                {% elif order.status == 'pending' %}
+                                    <span class="badge bg-warning">Pending</span>
+                                {% else %}
+                                    <span class="badge bg-danger">{{ order.get_status_display }}</span>
+                                {% endif %}
+                            </td>
+                            <td>Rs. {{ order.net_amount|floatformat:2 }}</td>
+                            <td>{{ order.created_at|date:"M d, Y" }}</td>
+                            <td>
+                                <a href="{% url 'order-detail' order.pk %}" class="btn btn-sm btn-info">View</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="card-body">
+                <p class="text-muted">No orders yet.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

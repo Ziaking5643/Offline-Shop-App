@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Receipt - Shop Manager{% endblock %}
+
+{% block extra_css %}
+<style>
+    .receipt {
+        max-width: 600px;
+        margin: 20px auto;
+        background: white;
+        padding: 30px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+    
+    .receipt-header {
+        text-align: center;
+        border-bottom: 2px solid #333;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .receipt-header h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+    
+    .receipt-header p {
+        margin: 5px 0;
+        color: #666;
+        font-size: 12px;
+    }
+    
+    .receipt-section {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .receipt-section:last-child {
+        border-bottom: none;
+    }
+    
+    .section-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: #333;
+    }
+    
+    .receipt-line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        font-size: 13px;
+    }
+    
+    .receipt-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+    }
+    
+    .receipt-table thead {
+        border-top: 1px solid #333;
+        border-bottom: 1px solid #333;
+    }
+    
+    .receipt-table th {
+        text-align: left;
+        padding: 8px 0;
+        font-weight: bold;
+        font-size: 12px;
+    }
+    
+    .receipt-table td {
+        padding: 8px 0;
+        font-size: 12px;
+    }
+    
+    .amount-col {
+        text-align: right;
+    }
+    
+    .receipt-total {
+        border-top: 2px solid #333;
+        padding-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    
+    .receipt-footer {
+        text-align: center;
+        margin-top: 20px;
+        color: #666;
+        font-size: 12px;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
+    }
+    
+    @media print {
+        body {
+            background: white;
+        }
+        .btn {
+            display: none;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>🧾 Order Receipt</h2>
+    </div>
+    <div class="col-md-4">
+        <button onclick="window.print()" class="btn btn-primary float-end me-2">🖨️ Print</button>
+        <a href="{% url 'order-detail' order.pk %}" class="btn btn-secondary float-end me-2">← Back</a>
+    </div>
+</div>
+
+<div class="receipt">
+    <!-- Header -->
+    <div class="receipt-header">
+        <h1>📦 RECEIPT</h1>
+        <p>Shop Management System</p>
+    </div>
+
+    <!-- Order Information -->
+    <div class="receipt-section">
+        <div class="section-title">Order Details</div>
+        <div class="receipt-line">
+            <span>Order Number:</span>
+            <strong>{{ order.order_number }}</strong>
+        </div>
+        <div class="receipt-line">
+            <span>Order Date:</span>
+            <span>{{ order.created_at|date:"M d, Y H:i" }}</span>
+        </div>
+        <div class="receipt-line">
+            <span>Status:</span>
+            <strong>{{ order.get_status_display }}</strong>
+        </div>
+    </div>
+
+    <!-- Customer Information -->
+    <div class="receipt-section">
+        <div class="section-title">Customer</div>
+        <div class="receipt-line">
+            <span>{{ order.customer.name }}</span>
+        </div>
+        {% if order.customer.phone %}
+        <div class="receipt-line">
+            <span>Phone:</span>
+            <span>{{ order.customer.phone }}</span>
+        </div>
+        {% endif %}
+        {% if order.customer.address %}
+        <div class="receipt-line">
+            <span>Address:</span>
+            <span>{{ order.customer.address }}</span>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Items -->
+    <div class="receipt-section">
+        <div class="section-title">Items Ordered</div>
+        <table class="receipt-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th class="amount-col">Qty</th>
+                    <th class="amount-col">Price</th>
+                    <th class="amount-col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td class="amount-col">{{ item.quantity }}</td>
+                    <td class="amount-col">Rs. {{ item.unit_price|floatformat:2 }}</td>
+                    <td class="amount-col">Rs. {{ item.total|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Summary -->
+    <div class="receipt-section">
+        <div class="section-title">Summary</div>
+        <div class="receipt-line">
+            <span>Subtotal:</span>
+            <span>Rs. {{ order.total_amount|floatformat:2 }}</span>
+        </div>
+        {% if order.discount > 0 %}
+        <div class="receipt-line">
+            <span>Discount:</span>
+            <span>-Rs. {{ order.discount|floatformat:2 }}</span>
+        </div>
+        {% endif %}
+        {% if order.tax > 0 %}
+        <div class="receipt-line">
+            <span>Tax:</span>
+            <span>+Rs. {{ order.tax|floatformat:2 }}</span>
+        </div>
+        {% endif %}
+        <div class="receipt-total">
+            <span>Total Amount:</span>
+            <span>Rs. {{ order.net_amount|floatformat:2 }}</span>
+        </div>
+    </div>
+
+    <!-- Payment Information -->
+    {% if order.payment %}
+    <div class="receipt-section">
+        <div class="section-title">Payment</div>
+        <div class="receipt-line">
+            <span>Amount Paid:</span>
+            <strong>Rs. {{ order.payment.amount|floatformat:2 }}</strong>
+        </div>
+        <div class="receipt-line">
+            <span>Payment Method:</span>
+            <span>{{ order.payment.get_payment_method_display }}</span>
+        </div>
+        {% if order.payment.transaction_id %}
+        <div class="receipt-line">
+            <span>Transaction ID:</span>
+            <span>{{ order.payment.transaction_id }}</span>
+        </div>
+        {% endif %}
+        <div class="receipt-line">
+            <span>Payment Date:</span>
+            <span>{{ order.payment.payment_date|date:"M d, Y H:i" }}</span>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Footer -->
+    <div class="receipt-footer">
+        <p>Thank you for your business!</p>
+        <p>This is a computer-generated receipt. No signature is required.</p>
+        <p style="font-size: 11px; margin-top: 10px;">{{ "now"|date:"M d, Y H:i" }}</p>
+    </div>
+</div>
+{% endblock %}

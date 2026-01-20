@@ -1,0 +1,44 @@
+# Shop Configuration File
+# Edit these settings to customize your shop
+
+# Shop Name - appears in browser title and admin panel
+SHOP_NAME = "My Shop"
+
+# Currency
+CURRENCY = "Rs."  # Change to $ or € or other currency
+
+# Default Tax Rate (as percentage)
+DEFAULT_TAX_RATE = 0  # e.g., 17 for 17% GST
+
+# Default Discount (as percentage)
+DEFAULT_DISCOUNT_RATE = 0
+
+# Low Stock Alert Threshold
+# Products will be marked as "Low Stock" when quantity falls below this
+LOW_STOCK_THRESHOLD = 10
+
+# Invoice/Receipt Settings
+BUSINESS_ADDRESS = "Your Shop Address Here"
+BUSINESS_PHONE = "Your Phone Number"
+BUSINESS_EMAIL = "your@email.com"
+
+# Admin Settings
+ADMIN_USERNAME = "admin"
+# Note: Password should be changed after first login
+
+# Data Retention
+DAYS_TO_KEEP_OLD_LOGS = 365  # Keep activity logs for 1 year
+
+# Display Settings
+ITEMS_PER_PAGE = 20
+DECIMAL_PLACES = 2  # For currency display
+
+# Features
+ENABLE_CUSTOMER_CREDIT = True  # Allow credit/deferred payments
+ENABLE_INVENTORY_TRACKING = True
+ENABLE_PAYMENT_RECEIPTS = True
+
+# Backup Reminder
+BACKUP_REMINDER_DAYS = 7  # Remind to backup every 7 days
+
+# End of Configuration

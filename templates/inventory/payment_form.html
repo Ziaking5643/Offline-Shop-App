@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Payment - Shop Manager{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>💳 Add Payment for {{ order.order_number }}</h2>
+    </div>
+    <div class="col-md-4">
+        <a href="{% url 'order-detail' order.pk %}" class="btn btn-secondary float-end">← Back</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Order Summary</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Order Number:</strong> {{ order.order_number }}</p>
+                <p><strong>Customer:</strong> {{ order.customer.name }}</p>
+                <p><strong>Subtotal:</strong> Rs. {{ order.total_amount|floatformat:2 }}</p>
+                <p><strong>Discount:</strong> -Rs. {{ order.discount|floatformat:2 }}</p>
+                <p><strong>Tax:</strong> +Rs. {{ order.tax|floatformat:2 }}</p>
+                <hr>
+                <p style="font-size: 1.2rem;"><strong>Due Amount:</strong> Rs. {{ order.net_amount|floatformat:2 }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Payment Information</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger mt-1">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success">✔️ Record Payment</button>
+                    <a href="{% url 'order-detail' order.pk %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
